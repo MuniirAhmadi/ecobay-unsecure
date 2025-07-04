@@ -17,7 +17,7 @@ $error = isset($_GET['error']) ? $_GET['error'] : null;
             <div class="card border-danger shadow">
                 <div class="card-header bg-danger text-white">
                     <h4 class="mb-0">
-                        <i class="fas fa-exclamation-triangle me-2"></i>Sell Your Waste (Vulnerable Version)
+                        <i class="fas fa-exclamation-triangle me-2"></i>Sell Your Waste 
                     </h4>
                 </div>
                 
@@ -73,7 +73,7 @@ $error = isset($_GET['error']) ? $_GET['error'] : null;
                         
                         <div class="d-grid">
                             <button type="submit" class="btn btn-danger btn-lg">
-                                <i class="fas fa-exclamation-triangle me-2"></i>Submit (Insecure)
+                                <i class="fas fa-exclamation-triangle me-2"></i>Submit 
                             </button>
                         </div>
                     </form>

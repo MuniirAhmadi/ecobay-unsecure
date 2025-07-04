@@ -17,7 +17,7 @@ $errors = [];
 // Required fields
 $name = sanitizeInput($_POST['name'] ?? '');
 $type = sanitizeInput($_POST['type'] ?? '');
-$description = sanitizeInput($_POST['description'] ?? '');
+$description = $_POST['description'] ?? '';
 
 // Validate waste type
 $allowedTypes = ['Plastic', 'Metal', 'Paper', 'Glass', 'Electronics', 'Organic', 'Others'];

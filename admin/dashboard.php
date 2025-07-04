@@ -57,7 +57,7 @@ $completedItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <p class="card-text"><strong class="text-success">Type:</strong> <?= htmlspecialchars($item['type']) ?></p>
                                     <p class="card-text"><strong class="text-success">Posted by:</strong> <?= htmlspecialchars($item['user_name']) ?></p>
                                     <p class="card-text"><strong class="text-success">Location:</strong> <?= htmlspecialchars($item['user_address']) ?></p>
-                                    <p class="card-text"><strong class="text-success">Description:</strong> <?= htmlspecialchars($item['description']) ?></p>
+                                    <p class="card-text"><strong class="text-success">Description:</strong> <?=$item['description'] ?></p> //no htmlspecialchars
 
                                     <form action="process_pickup.php" method="post" class="mt-auto">
                                         <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
@@ -117,3 +117,5 @@ $completedItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php include '../includes/footer.php'; ?>
+
+

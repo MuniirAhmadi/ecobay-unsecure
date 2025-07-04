@@ -10,18 +10,20 @@ if (isLoggedIn()) {
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = sanitizeInput($_POST['username']);
+    $username = $_POST['username'];  // User input is not sanitized
     $password = $_POST['password'];
 
     if (empty($username)) $errors[] = "Username is required";
     if (empty($password)) $errors[] = "Password is required";
 
     if (empty($errors)) {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
-        $stmt->execute([$username, $username]);
-        $user = $stmt->fetch();
+        // Vulnerable SQL query - directly concatenating user input into the query
+        $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$username'";  // Vulnerable to SQLi
+        $result = $pdo->query($sql);
+        $user = $result->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
+        // Simple string comparison instead of password_hash verification
+        if ($user && $password === $user['password']) {
             // Store user data in session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
@@ -60,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-success text-white text-center">
+                    <div class="card-header bg-danger text-white text-center">
                         <h4><i class="fas fa-sign-in-alt me-2"></i>Login</h4>
                     </div>
                     <div class="card-body">
@@ -92,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success btn-lg">
+                                <button type="submit" class="btn btn-danger btn-lg">
                                     <i class="fas fa-sign-in-alt me-2"></i>Login
                                 </button>
                             </div>
@@ -100,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         <div class="text-center mt-3">
                             <p class="mb-1">Don't have an account?</p>
-                            <a href="register.php" class="btn btn-outline-success btn-sm">
+                            <a href="register.php" class="btn btn-outline-danger btn-sm">
                                 <i class="fas fa-user-plus me-1"></i>Register here
                             </a>
                         </div>
